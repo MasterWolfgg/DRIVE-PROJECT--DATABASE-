@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <title>Mini Drive | Home</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+    #upload-toast,
+    #upload-error-toast {
+      transition: opacity 0.4s ease;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-800 min-h-screen w-screen p-4 relative">
+  <!-- Starry Night Background -->
+  <div id="particles-js"></div>
+
+  <!-- Main Container -->
+  <main class="main-container max-w-4xl mx-auto fade-in">
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between gap-4 mb-6 py-3">
+      <!-- Upload Button -->
+      <button onclick="showPopUP()"
+        class="hover-scale bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow">
+        Upload File
+      </button>
+
+      <!-- Center Title -->
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center flex-1">
+        Mini Drive
+      </h1>
+
+      <!-- Logout Button -->
+      <a href="/logout"
+        class="hover-scale bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-lg shadow">
+        Log-Out
+      </a>
+    </div>
+
+    <!-- Upload Pop-up -->
+    <div class="pop hidden backdrop-blur-sm fixed top-0 left-0 h-screen w-screen flex items-center justify-center z-50">
+      <form id="upload-form" enctype="multipart/form-data"
+        class="relative bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-11/12 max-w-md border dark:border-gray-700">
+        <label for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag & drop</p>
+            <p class="text-xs text-gray-400">SVG, PNG, JPG, or GIF (MAX. 800x400px)</p>
+          </div>
+          <input id="dropzone-file" name="file" type="file" class="hidden" required />
+        </label>
+
+        <div class="mt-4 flex justify-between items-center">
+          <button type="submit"
+            class="hover-scale bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">Upload</button>
+          <button onclick="hidePopUP()" type="button"
+            class="text-gray-500 dark:text-gray-300 hover:text-red-500 text-2xl">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- File List -->
+    <div class="files mt-4 flex flex-col gap-3">
+      <% if (files.length === 0) { %>
+      <div class="text-center text-gray-600 dark:text-gray-300 mt-10 text-lg">
+        <i class="ri-folder-open-line text-4xl mb-2"></i><br />
+        You haven't uploaded any files yet.
+      </div>
+      <% } else { %>
+      <% files.forEach((file) => { %>
+      <div
+        class="flex justify-between items-center p-3 bg-white dark:bg-gray-700 rounded-md shadow border border-gray-300 dark:border-gray-600">
+        <h1 class="text-gray-900 dark:text-white"><%= file.originalname %></h1>
+        <a href="/download/<%= file.path %>" download="<%= file.originalname %>" target="_blank"
+          class="text-blue-600 hover:text-blue-800 text-xl">
+          <i class="ri-download-line"></i>
+        </a>
+      </div>
+      <% }) %>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Toasts -->
+  <div id="upload-toast"
+    class="hidden fixed bottom-5 right-5 z-50 flex items-center p-4 text-sm text-white bg-green-600 rounded-lg shadow dark:bg-green-700"
+    role="alert">
+    <i class="ri-checkbox-circle-line mr-2 text-xl"></i>
+    <div>File uploaded successfully!</div>
+  </div>
+
+  <div id="upload-error-toast"
+    class="hidden fixed bottom-5 right-5 z-50 flex items-center p-4 text-sm text-white bg-red-600 rounded-lg shadow dark:bg-red-700"
+    role="alert">
+    <i class="ri-close-circle-line mr-2 text-xl"></i>
+    <div>Error uploading file. Please try again.</div>
+  </div>
+
+  <!-- Session Expired Toast -->
+  <div id="session-expired-toast"
+    class="hidden fixed bottom-5 left-5 z-50 flex items-center p-4 text-sm text-white bg-yellow-500 rounded-lg shadow dark:bg-yellow-600"
+    role="alert">
+    <i class="ri-time-line mr-2 text-xl"></i>
+    <div>Your session expired. Redirecting to login...</div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script>
+    function showPopUP() {
+      document.querySelector(".pop").style.display = "flex";
+    }
+
+    function hidePopUP() {
+      document.querySelector(".pop").style.display = "none";
+    }
+
+    const uploadForm = document.getElementById("upload-form");
+    const uploadToast = document.getElementById("upload-toast");
+    const errorToast = document.getElementById("upload-error-toast");
+
+    uploadForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(uploadForm);
+
+      try {
+        const response = await fetch("/upload", { method: "POST", body: formData });
+        const result = await response.json();
+
+        if (result.success) {
+          uploadToast.classList.remove("hidden");
+          hidePopUP();
+          setTimeout(() => {
+            uploadToast.classList.add("hidden");
+            location.reload();
+          }, 2000);
+        } else {
+          errorToast.classList.remove("hidden");
+          setTimeout(() => errorToast.classList.add("hidden"), 3000);
+        }
+      } catch (err) {
+        errorToast.classList.remove("hidden");
+        setTimeout(() => errorToast.classList.add("hidden"), 3000);
+      }
+    });
+
+    // Auto-logout
+    setTimeout(() => {
+      const toast = document.getElementById("session-expired-toast");
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        window.location.href = "/logout";
+      }, 3000);
+    }, 15 * 60 * 1000);
+  </script>
+
+  <!-- ParticlesJS Shooting Stars & Parallax -->
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 1000 } },
+        color: { value: "#ffffff" },
+        shape: { type: "star", polygon: { nb_sides: 5 } },
+        opacity: {
+          value: 0.7,
+          random: true,
+          anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false }
+        },
+        size: { value: 2, random: true },
+        line_linked: { enable: false },
+        move: {
+          enable: true,
+          speed: 0.6,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "repulse" }, resize: true },
+        modes: { repulse: { distance: 80, duration: 0.4 } }
+      },
+      retina_detect: true
+    });
+
+    // Mouse parallax
+    document.addEventListener("mousemove", (e) => {
+      const canvas = document.querySelector("#particles-js canvas");
+      if (!canvas) return;
+      const moveX = (e.clientX / window.innerWidth - 0.5) * 30;
+      const moveY = (e.clientY / window.innerHeight - 0.5) * 30;
+      canvas.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      canvas.style.transition = "transform 0.1s ease-out";
+    });
+  </script>
+</body>
+
+</html>

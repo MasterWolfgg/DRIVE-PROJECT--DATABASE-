@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <title>Mini Drive</title>
+
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+    .transition-all {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .main-container {
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 h-screen w-screen flex items-center justify-center">
+
+  <!-- Particles.js container -->
+  <div id="particles-js"></div>
+
+  <!-- Main Content -->
+  <div
+    class="main-container fade-in max-w-md w-full p-6 text-center bg-white border border-gray-200 rounded-2xl shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all">
+
+    <!-- Title -->
+    <h1 class="mb-2 text-4xl font-extrabold text-gray-900 dark:text-white transition-all">Mini Drive</h1>
+
+    <!-- Subtitle -->
+    <p class="mb-3 text-gray-600 dark:text-gray-300 text-base sm:text-lg transition-all">
+      A full-stack file storage system <br />
+      Built with Node.js, Express, MongoDB, Firebase, and Tailwind CSS
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+      <button onclick="window.location.href='/user/login';"
+        class="hover-scale w-full sm:w-auto flex items-center justify-center px-5 py-3 text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600 transition-all">
+        <i class="ri-user-fill text-xl me-2"></i>
+        <span class="text-lg font-medium">Login</span>
+      </button>
+
+      <button onclick="window.location.href='/user/register';"
+        class="hover-scale w-full sm:w-auto flex items-center justify-center px-5 py-3 text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600 transition-all">
+        <i class="ri-user-add-fill text-xl me-2"></i>
+        <span class="text-lg font-medium">Register</span>
+      </button>
+    </div>
+
+    <!-- Social -->
+    <div class="mb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+      Connect with Me
+    </div>
+    <div class="flex justify-center space-x-6 mt-2">
+      <a href="https://github.com/MasterWolfgg" target="_blank" title="GitHub"
+        class="hover-scale text-gray-500 hover:text-black dark:hover:text-white text-2xl transition-all">
+        <i class="ri-github-fill"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/sarbobhowma-sen" target="_blank" title="LinkedIn"
+        class="hover-scale text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-2xl transition-all">
+        <i class="ri-linkedin-box-fill"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 60,
+          "density": {
+            "enable": true,
+            "value_area": 1000
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "star",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.8,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1.5,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 2,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 0.3,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        },
+        "modes": {
+          "repulse": {
+            "distance": 80,
+            "duration": 0.4
+          }
+        }
+      },
+      "retina_detect": true
+    });
+    // Parallax mouse movement
+  document.addEventListener("mousemove", (e) => {
+    const particlesCanvas = document.querySelector("#particles-js canvas");
+    if (!particlesCanvas) return;
+
+    const moveX = (e.clientX / window.innerWidth - 0.5) * 30;
+    const moveY = (e.clientY / window.innerHeight - 0.5) * 30;
+
+    particlesCanvas.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    particlesCanvas.style.transition = "transform 0.1s ease-out";
+  });
+  </script>
+</body>
+
+</html>

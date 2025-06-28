@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <title>Register | MiniDrive</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+    .toast {
+      animation: slideIn 0.4s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-container {
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-800 min-h-screen flex items-center justify-center px-4 relative">
+
+  <!-- 🌌 Starry background -->
+  <div id="particles-js"></div>
+
+  <!-- 🔔 Error Toast -->
+  <% if (typeof error !== 'undefined') { %>
+    <div id="error-toast"
+      class="toast fixed top-6 right-6 z-50 flex items-center w-fit max-w-xs p-4 text-white bg-red-600 rounded-lg shadow dark:bg-red-700"
+      role="alert">
+      <i class="ri-error-warning-line text-xl mr-3"></i>
+      <div class="text-sm font-medium"><%= error %></div>
+    </div>
+  <% } %>
+
+  <!-- Registration Form -->
+  <div
+    class="main-container w-full max-w-md bg-white dark:bg-gray-900 shadow-md rounded-xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700 fade-in">
+
+    <!-- Title -->
+    <h5 class="mb-6 text-3xl font-extrabold text-center text-gray-900 dark:text-white">
+      Welcome to MiniDrive
+    </h5>
+
+    <form action="/user/register" method="post">
+      <!-- Username -->
+      <div class="mb-4">
+        <label for="username" class="block mb-2 text-sm font-medium text-gray-800 dark:text-gray-300">
+          Username
+        </label>
+        <input type="text" id="username" name="username" placeholder="John"
+          class="w-full px-4 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required />
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-800 dark:text-gray-300">
+          Email address
+        </label>
+        <input type="email" id="email" name="email" placeholder="john.doe@company.com"
+          class="w-full px-4 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-800 dark:text-gray-300">
+          Password
+        </label>
+        <input type="password" id="password" name="password" placeholder="•••••••••"
+          class="w-full px-4 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required />
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="hover-scale w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold text-sm transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+        Submit
+      </button>
+    </form>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+  <script>
+    // Auto-hide toast
+    setTimeout(() => {
+      const toast = document.getElementById('error-toast');
+      if (toast) {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 400);
+      }
+    }, 3000);
+
+    // Particles.js starry night config
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 60,
+          "density": {
+            "enable": true,
+            "value_area": 1000
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "star",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.8,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1.5,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 2,
+          "random": true
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 0.3,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "resize": true
+        },
+        "modes": {
+          "repulse": {
+            "distance": 80,
+            "duration": 0.4
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Parallax mouse movement
+  document.addEventListener("mousemove", (e) => {
+    const particlesCanvas = document.querySelector("#particles-js canvas");
+    if (!particlesCanvas) return;
+
+    const moveX = (e.clientX / window.innerWidth - 0.5) * 30;
+    const moveY = (e.clientY / window.innerHeight - 0.5) * 30;
+
+    particlesCanvas.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    particlesCanvas.style.transition = "transform 0.1s ease-out";
+  });
+  </script>
+</body>
+
+</html>
