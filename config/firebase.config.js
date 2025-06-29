@@ -13,7 +13,7 @@ serviceAccountRaw.private_key = serviceAccountRaw.private_key.replace(/\\n/g, '\
 
 const firebase = Firebase.initializeApp({
   credential: Firebase.credential.cert(serviceAccountRaw),
-  storageBucket: 'drive-f3841.appspot.com', // fix .app to .com if needed
-});
+  storageBucket: 'drive-f3841.firebasestorage.app', // fix .app to .com if needed
+});  
 
 module.exports = Firebase;
